@@ -288,8 +288,8 @@ def build_message(payload_parts: list, raw_body: str) -> str:
         return None
 
 @app.post("/webhook")
-async def webhook(request: Request, x_webhook_secret: str = Header(default="")):
-    if x_webhook_secret != WEBHOOK_SECRET:
+async def webhook(request: Request, secret: str = ""):
+    if secret != WEBHOOK_SECRET:
         raise HTTPException(status_code=401, detail="Unauthorized")
         
     body = await request.body()
